@@ -27,7 +27,7 @@ class Post
     private ?bool $isFeatured = null;
 
     #[ORM\ManyToOne(inversedBy: 'posts')]
-    private ?user $author = null;
+    private ?User $author = null;
 
     public function getId(): ?int
     {
@@ -82,12 +82,12 @@ class Post
         return $this;
     }
 
-    public function getAuthor(): ?user
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(?user $author): static
+    public function setAuthor(?User $author): static
     {
         $this->author = $author;
 
