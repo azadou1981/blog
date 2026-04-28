@@ -14,4 +14,6 @@ final class NavController extends AbstractController
             'categories' => $repo->findAll(),
          ]);
    }
+
+   
 }

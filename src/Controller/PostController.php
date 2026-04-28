@@ -19,7 +19,9 @@ public function index(PostRepository $postRepository): Response
 {
     return $this->render('post/index.html.twig', [
         'posts' => $postRepository->findAll(),
+        'recentPosts' => $postRepository->findBy([], ['published' => 'DESC'], 3),
     ]);
+    
 }
 
     #[Route('/new', name: 'app_post_new', methods: ['GET', 'POST'])]
