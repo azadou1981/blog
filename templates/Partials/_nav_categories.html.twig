@@ -1,7 +1,9 @@
 
     {% for category in categories %}
   
-        <a class="nav-item nav-link link-body-emphasis" href="#">{{ category.name }}</a>
+        <a class="nav-item nav-link link-body-emphasis" href="{{path('app_post_index', {catId: category.id})}}">
+        {{ category.name }}
+        </a>
 
     {% endfor %}
 
