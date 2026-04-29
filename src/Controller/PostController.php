@@ -15,14 +15,15 @@ use Symfony\Component\Routing\Attribute\Route;
 final class PostController extends AbstractController
 {
     #[Route(name: 'app_post_index', methods: ['GET'])]
-public function index(PostRepository $postRepository): Response
-{
-    return $this->render('post/index.html.twig', [
-        'posts' => $postRepository->findAll(),
-        'recentPosts' => $postRepository->findBy([], ['published' => 'DESC'], 3),
-    ]);
-    
-}
+    public function index(PostRepository $postRepository): Response
+    {
+        $post = $postRepository->findAll();
+        return $this->render('post/index.html.twig', [
+            'posts' => $post,
+            'post' => $post[0] ?? null,
+            'recentPosts' => $postRepository->findBy([], ['published' => 'DESC'], 3),
+        ]);
+    }
 
     #[Route('/new', name: 'app_post_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -73,7 +74,7 @@ public function index(PostRepository $postRepository): Response
     #[Route('/{id}', name: 'app_post_delete', methods: ['POST'])]
     public function delete(Request $request, Post $post, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $post->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($post);
             $entityManager->flush();
         }
